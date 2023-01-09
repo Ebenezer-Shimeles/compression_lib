@@ -124,7 +124,7 @@ public:
 		}
 		elems[size++] = item;
 		//std::cout << "Inserted element at last: ";
-		PrintHeap();
+		//PrintHeap();
 		//Works perfectly!
 		ShiftUp(size-1);
 		
@@ -172,7 +172,7 @@ public:
 	void ToString(std::string& str) {
 		for (uint32_t i = 0; i < size; i++) {
 			//std::cout << elems[i] << ", ";
-			str += std::to_string(elems[i]); //assuming we will only use this for int
+		//	str += std::to_string(elems[i]); //assuming we will only use this for int
 			str += ", ";
 		}
 	}
@@ -201,9 +201,11 @@ public:
 	}
 
 	bool operator >(HuffmanTreeNode other) {
+		std::cout << "Comp callled!!!!!!!!!!\n";
 		return this->freq > other.freq;
 	}
 	bool operator >(HuffmanTreeNode *other) {
+		std::cout << "Comp callled!!!!!!!!!!\n";
 		return this->freq > other->freq;
 	}
 	bool operator <(HuffmanTreeNode other) {
@@ -315,14 +317,16 @@ char* HuffmanCompress(const char* str) {
 	auto freqs = GetFreqsOfChars(str);
 	PrintFrequencyOfChars(freqs);
 	//Looks good!
-	auto m = new MaxHeap<HuffmanTreeNode*>();
+	auto m = new MaxHeap<HuffmanTreeNode>();
 
 	for (short i = 0; i < 128; i++) {
 		if(freqs[i]) m->Insert(
-			new HuffmanTreeNode( (char)i, freqs[i], nullptr, nullptr)
+			 HuffmanTreeNode( (char)i, freqs[i], nullptr, nullptr)
 		);
 	}
-
+	std::cout << "\nFinal heap :\n";
+	m->PrintHeap();
+	std::cout << "\n";
 	return  const_cast<char*>(str);
 }
 
