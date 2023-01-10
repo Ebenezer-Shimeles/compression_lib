@@ -13,7 +13,8 @@
 template<class T>
 class MaxHeap {
 	
-private:  
+private:
+	bool are_pointer_types;
 	uint32_t current_max_size;
 	uint32_t size = 0;
 	
@@ -61,7 +62,8 @@ public:
 		if (size == 1) return; // A man is a boss of his house.
 		uint32_t parrent_index = ParrentIndex(index);
 
-		while (elems[index] > elems[parrent_index]) {
+		///Since we will use this for pointers DONOT USE THIS HEAP FOR NON POINTERS!!!!
+		while (*(elems[index]) > *(elems[parrent_index]) ) {
 			//std::cout << "Before swap:\n";
 		//	PrintHeap();
 			Swap(elems[index], elems[parrent_index]);
@@ -160,12 +162,14 @@ public:
 		return current_max_size;
 	}
 	
-	MaxHeap() {
+	MaxHeap(bool pt = false) {
+		are_pointer_types = pt;
 		init(MAX_HEAP_MAX_SIZE);
 	}
 
 
-	MaxHeap(uint32_t size) {
+	MaxHeap(uint32_t size, bool pt = false) {
+		are_pointer_types = pt;
 		init(size);
 	}
 
@@ -197,7 +201,7 @@ public:
 		character = c;
 		freq = f;
 		left = l;
-		r = right;
+	    right = r;
 	}
 
 	bool operator >(HuffmanTreeNode other) {
@@ -317,22 +321,34 @@ char* HuffmanCompress(const char* str) {
 	auto freqs = GetFreqsOfChars(str);
 	PrintFrequencyOfChars(freqs);
 	//Looks good!
-	auto m = new MaxHeap<HuffmanTreeNode>();
+	auto m = new MaxHeap<HuffmanTreeNode *>();
 
 	for (short i = 0; i < 128; i++) {
 		if(freqs[i]) m->Insert(
-			 HuffmanTreeNode( (char)i, freqs[i], nullptr, nullptr)
+			 new HuffmanTreeNode( (char)i, freqs[i], nullptr, nullptr)
 		);
 	}
 	std::cout << "\nFinal heap :\n";
 	m->PrintHeap();
-	std::cout << "\n";
+	std::cout << "\n\n\n\n\n\n\n";
+	while (m->Size()== 1) {
+		auto left = m->Pop();
+		auto right = m->Pop();
+		int sum = left->freq + right->freq;
+		m->Insert(new HuffmanTreeNode(0xff, 0, left, right));
+
+
+
+
+	}
+	std::cout << m->Pop()->left->character;
+
 	return  const_cast<char*>(str);
 }
 
 int main() {
 	using namespace std;
-	cout << HuffmanCompress("Hello this is good");
+	cout << HuffmanCompress("\nHello this is good. Baby calm down calm down!");
 	//cout << HuffmanCompress("Ebenezer Shimeles Went to the grocery to buy water!");
 	//{
 	//	auto m = new MaxHeap<int>(1);
