@@ -63,7 +63,7 @@ public:
 		uint32_t parrent_index = ParrentIndex(index);
 
 		///Since we will use this for pointers DONOT USE THIS HEAP FOR NON POINTERS!!!!
-		while (*(elems[index]) > *(elems[parrent_index]) ) {
+		while (*(elems[index]) < *(elems[parrent_index]) ) {
 			//std::cout << "Before swap:\n";
 		//	PrintHeap();
 			Swap(elems[index], elems[parrent_index]);
@@ -87,10 +87,10 @@ public:
 
 		uint32_t swap_index = index;
 		while (left_index < size && right_index < size) {
-			if (*(elems[swap_index]) < *(elems[left_index] )) {
+			if (*(elems[swap_index]) > *(elems[left_index] )) {
 				swap_index = left_index;
 			}
-			if ( *(elems[swap_index]) < *(elems[right_index])) {
+			if ( *(elems[swap_index]) > *(elems[right_index])) {
 				swap_index = right_index;
 			}
 			if (swap_index == index) break;
