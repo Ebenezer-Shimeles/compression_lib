@@ -453,7 +453,19 @@ void GetCharFromHuffmanCode(HuffmanTreeNode* root, std::string code,
 	}
 }
 
-const char* HuffmanCompress(const char* str) {
+void Symetrify(std::string& str, char added) {
+	size_t size = str.size();
+
+	uint8_t left = size % 8;
+	if (!left) return;
+
+	for (uint8_t i = 0; i < 8 - left; i++) {
+		str += added;
+	}
+}
+
+std::string HuffmanCompress(const char* str) {
+	
 	auto freqs = GetFreqsOfChars(str);
 	//PrintFrequencyOfChars(freqs);
 	//Looks good!
@@ -482,11 +494,30 @@ const char* HuffmanCompress(const char* str) {
 	std::string final_string = "";
 	std::cout << "=>'compressed': \n";
 	std::string h = str;
+
+
 	for (int i = 0; i < h.size(); i++) {
-		std::cout << codes[str[i]] << " ";
+		//std::cout << codes[str[i]] << " ";
+		final_string += codes[str[i]];
+		//final_string += " ";
 	}
-	return  final_string.c_str();
+	//std::cout <<std::endl << final_string <<std::endl;
+	std::cout << "\nSize before symetify: " << final_string.size() << std::endl;
+
+	Symetrify(final_string, '0');
+	std::cout << "\nSize after symetify: " << final_string.size() << std::endl;
+
+	std::string return_value = "";
+	int current_index = 0;
+	for (int i = 0; i < h.size(); i++) {
+		char t = 0;
+		//GetCharFromHuffmanCode(tree, final_string, current_index, t);
+		//Decompression works!!!!
+		return_value += t;
+	}
+	return  return_value;
 }
+
 
 int main() {
 	using namespace std;
