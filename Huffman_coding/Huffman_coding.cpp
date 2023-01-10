@@ -386,40 +386,80 @@ uint8_t BinToChar(std::string s) {
         the binary strings after using
 		the freq table qrray after using
 */
-char* HuffmanCompress(const char* str) {
-	auto freqs = GetFreqsOfChars(str);
-	//PrintFrequencyOfChars(freqs);
-	//Looks good!
-	auto m = new MaxHeap<HuffmanTreeNode *>();
+
+/*
+   codes' is 128 size
+*/
+void BuildHuffmanCode(HuffmanTreeNode* root, std::string codes[128], std::string now_code) {
+	if (!root) {
+		return;
+	}
+	if (!(root->left) && (!root->right)) {
+		//std::cout << "\nSet " << root->character << " =" << now_code <<'\n';
+		codes[root->character] = now_code;
+	}
+   
+	
+	BuildHuffmanCode(root->left, codes, now_code + "0");
+	
+
+	
+	BuildHuffmanCode(root->right, codes, now_code + "1");
+
+
+}
+
+HuffmanTreeNode* GetHuffmanTree(uint32_t *freqs) {
+	auto m = new MaxHeap<HuffmanTreeNode*>();
 
 	for (short i = 0; i < 128; i++) {
-		if(freqs[i]) m->Insert(
-			 new HuffmanTreeNode( (char)i, freqs[i], nullptr, nullptr)
+		if (freqs[i]) m->Insert(
+			new HuffmanTreeNode((char)i, freqs[i], nullptr, nullptr)
 		);
 	}
 	std::cout << "\nFinal heap :\n";
 	m->PrintHeap();
 	std::cout << "\n\n\n\n\n\n\n";
-	while (m->Size()!= 1) {
+	while (m->Size() != 1) {
 
 		auto left = m->Pop();
 		auto right = m->Pop();
-	//	std::cout << "\nLeft: " << left;
-	//	std::cout << "\nRight: " << right << std::endl;
+		//	std::cout << "\nLeft: " << left;
+		//	std::cout << "\nRight: " << right << std::endl;
 		int sum = left->freq + right->freq;
 		m->Insert(new HuffmanTreeNode('S', sum, left, right)); //S is a special character
 	}
-	
-	auto tree = m->Pop();
+	return  m->Pop();
+}
+
+char* HuffmanCompress(const char* str) {
+	auto freqs = GetFreqsOfChars(str);
+	//PrintFrequencyOfChars(freqs);
+	//Looks good!
+
+	auto tree = GetHuffmanTree(freqs);
 	//m->Pop();
     HuffmanTreeNode::printTree(tree);
+
+	std::string *codes = new std::string[128];
+	std::string tmp = "";
+	for (int i = 0; i < 128; i++) {
+		codes[i] = "";
+	}
+	BuildHuffmanCode(tree, codes, tmp);
+	std::cout << "\nCodes:\n";
+	for (int i = 0; i < 128; i++) {
+		if (codes[i].size()) {
+			std::cout <<"I: " << i << " Char: " << (char)i << " Code: " << codes[i] << "\n";
+		}
+	}
 
 	return  const_cast<char*>(str);
 }
 
 int main() {
 	using namespace std;
-	cout << HuffmanCompress("Hello this is good. Baby calm down calm down!");
+	cout << HuffmanCompress("It's a beutiful night, We lookijg for somthing dumb to do who cares babdy I think I wanna marry you!");
 	//cout << HuffmanCompress("Ebenezer Shimeles Went to the grocery to buy water!");
 	//{
 	//	auto m = new MaxHeap<int>(1);

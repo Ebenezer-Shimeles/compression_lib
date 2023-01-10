@@ -1,6 +1,6 @@
 ﻿  Huffman_coding.cpp
 C:\Users\natan\Source\Repos\Huffman_coding\Huffman_coding\Huffman_coding.cpp(55,21): warning C4018: '<': signed/unsigned mismatch
 C:\Users\natan\Source\Repos\Huffman_coding\Huffman_coding\Huffman_coding.cpp(52): message : while compiling class template member function 'void MaxHeap<HuffmanTreeNode *>::PrintHeap(void)'
-C:\Users\natan\Source\Repos\Huffman_coding\Huffman_coding\Huffman_coding.cpp(401): message : see reference to function template instantiation 'void MaxHeap<HuffmanTreeNode *>::PrintHeap(void)' being compiled
-C:\Users\natan\Source\Repos\Huffman_coding\Huffman_coding\Huffman_coding.cpp(393): message : see reference to class template instantiation 'MaxHeap<HuffmanTreeNode *>' being compiled
+C:\Users\natan\Source\Repos\Huffman_coding\Huffman_coding\Huffman_coding.cpp(421): message : see reference to function template instantiation 'void MaxHeap<HuffmanTreeNode *>::PrintHeap(void)' being compiled
+C:\Users\natan\Source\Repos\Huffman_coding\Huffman_coding\Huffman_coding.cpp(413): message : see reference to class template instantiation 'MaxHeap<HuffmanTreeNode *>' being compiled
   Huffman_coding.vcxproj -> C:\Users\natan\Source\Repos\Huffman_coding\x64\Debug\Huffman_coding.exe
