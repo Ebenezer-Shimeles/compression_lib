@@ -432,6 +432,27 @@ HuffmanTreeNode* GetHuffmanTree(uint32_t *freqs) {
 	return  m->Pop();
 }
 
+void GetCharFromHuffmanCode(HuffmanTreeNode* root, std::string code,
+	int& current_index, char &ch) {
+	std::cout << "Checking code: " << code[current_index] << std::endl;
+	if (!root) {
+		std::cout << "Root is NULL!" << std::endl;
+		return;
+	}
+	if (!(root->left) && !(root->right)) {
+		std::cout << "\nDecode set char to " << root->character << "\n";
+		ch =  root->character;
+		return;
+	}
+	if (code[current_index] == '0') {
+		//current_index++;
+		GetCharFromHuffmanCode(root->left, code, ++current_index, ch);
+	}
+	else if (code[current_index] == '1') {
+		GetCharFromHuffmanCode(root->right, code, ++current_index, ch);
+	}
+}
+
 char* HuffmanCompress(const char* str) {
 	auto freqs = GetFreqsOfChars(str);
 	//PrintFrequencyOfChars(freqs);
@@ -446,14 +467,17 @@ char* HuffmanCompress(const char* str) {
 	for (int i = 0; i < 128; i++) {
 		codes[i] = "";
 	}
-	BuildHuffmanCode(tree, codes, tmp);
+	BuildHuffmanCode(tree, codes, tmp); //used to compress files
 	std::cout << "\nCodes:\n";
 	for (int i = 0; i < 128; i++) {
 		if (codes[i].size()) {
 			std::cout <<"I: " << i << " Char: " << (char)i << " Code: " << codes[i] << "\n";
 		}
 	}
-
+	char test;
+	int t = 0;
+	GetCharFromHuffmanCode(tree, "1101010",t, test);
+	std::cout <<"Test " <<  test << std::endl;
 	return  const_cast<char*>(str);
 }
 
