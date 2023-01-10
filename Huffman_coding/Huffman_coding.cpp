@@ -411,9 +411,9 @@ void BuildHuffmanCode(HuffmanTreeNode* root, std::string codes[128], std::string
 
 HuffmanTreeNode* GetHuffmanTree(uint32_t *freqs) {
 	auto m = new MaxHeap<HuffmanTreeNode*>();
-
+	//save freqs as sizeof(int32_t) * 128 but the tree is always the same!!!
 	for (short i = 0; i < 128; i++) {
-		if (freqs[i]) m->Insert(
+		if (freqs[i]) m->Insert(  /////This is very tricky 
 			new HuffmanTreeNode((char)i, freqs[i], nullptr, nullptr)
 		);
 	}
@@ -453,7 +453,7 @@ void GetCharFromHuffmanCode(HuffmanTreeNode* root, std::string code,
 	}
 }
 
-char* HuffmanCompress(const char* str) {
+const char* HuffmanCompress(const char* str) {
 	auto freqs = GetFreqsOfChars(str);
 	//PrintFrequencyOfChars(freqs);
 	//Looks good!
@@ -474,16 +474,23 @@ char* HuffmanCompress(const char* str) {
 			std::cout <<"I: " << i << " Char: " << (char)i << " Code: " << codes[i] << "\n";
 		}
 	}
-	char test;
+
+	/*char test;
 	int t = 0;
 	GetCharFromHuffmanCode(tree, "1101010",t, test);
-	std::cout <<"Test " <<  test << std::endl;
-	return  const_cast<char*>(str);
+	std::cout <<"Test " <<  test << std::endl;*/
+	std::string final_string = "";
+	std::cout << "=>'compressed': \n";
+	std::string h = str;
+	for (int i = 0; i < h.size(); i++) {
+		std::cout << codes[str[i]] << " ";
+	}
+	return  final_string.c_str();
 }
 
 int main() {
 	using namespace std;
-	cout << HuffmanCompress("It's a beutiful night, We lookijg for somthing dumb to do who cares babdy I think I wanna marry you!");
+	cout << HuffmanCompress("It's a beutiful night, We lookijg for somthing dumb to do who cares babdy I think I wanna marry you!aaaaaaaaaaa");
 	//cout << HuffmanCompress("Ebenezer Shimeles Went to the grocery to buy water!");
 	//{
 	//	auto m = new MaxHeap<int>(1);
