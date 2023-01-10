@@ -87,20 +87,26 @@ public:
 
 		uint32_t swap_index = index;
 		while (left_index < size && right_index < size) {
-			if (elems[swap_index] < elems[left_index]) {
+			if (*(elems[swap_index]) < *(elems[left_index] )) {
 				swap_index = left_index;
 			}
-			if (elems[swap_index] < elems[right_index]) {
+			if ( *(elems[swap_index]) < *(elems[right_index])) {
 				swap_index = right_index;
 			}
 			if (swap_index == index) break;
 			//std::cout << "P swap\n";
-			Swap(elems[swap_index], elems[index]);
+			std::swap(elems[swap_index], elems[index]);
 			index = swap_index;
 			left_index = LeftIndex(index);
 			right_index = RightIndex(index);
 		}
 
+	}
+	void Swap(T* one, T* two) {
+		std::cout << std::endl << "Swapping " << *one << " and " << *two << std::endl;
+		auto tmp = two;
+		two = one;
+		one = two;
 	}
 	T Pop() {
 		if (size == 0) {
@@ -108,12 +114,17 @@ public:
 		}
 		//std::cout << "\nPOP::" << this << "\n"; //TODO:: just for testing delete latter please!
 		T max = elems[0]; //Max Heap so ...
-		Swap(elems[0], elems[size-1]);
+		//PrintHeap();
+	    std::swap (elems[0], elems[size - 1]);
+		//std::cout << "\nAfter Swap:: \n";
+		//PrintHeap();
 		
 	
 		size--; //forget the max
 		//works fine up to here
 		ShiftDown(0);
+		std::cout << "After ShiftDown(0) \n";
+		PrintHeap();
 		return max;
 	}
 
@@ -191,6 +202,27 @@ std::ostream& operator << (std::ostream & o, MaxHeap<T>* m) {
 
 
 class HuffmanTreeNode {
+private:
+	struct Trunk
+	{
+		Trunk* prev;
+		std::string str;
+		Trunk(Trunk* prev, std::string str)
+		{
+			this->prev = prev;
+			this->str = str;
+		}
+	};
+
+	static void showTrunks(Trunk* p)
+	{
+		if (p == nullptr) {
+			return;
+		}
+		showTrunks(p->prev);
+		std::cout << p->str;
+	}
+
 public:
 	int freq;
 	char character;
@@ -205,7 +237,7 @@ public:
 	}
 
 	bool operator >(HuffmanTreeNode other) {
-		std::cout << "Comp callled!!!!!!!!!!\n";
+		//std::cout << "Comp callled!!!!!!!!!!\n";
 		return this->freq > other.freq;
 	}
 	bool operator >(HuffmanTreeNode *other) {
@@ -239,6 +271,43 @@ public:
 		s += " character: ";
 		s += character;
 	}
+
+
+	static void printTree(HuffmanTreeNode* root, Trunk* prev = NULL, bool isLeft = false)
+	{
+		if (root == nullptr) {
+		//	std::cout << "L:";
+			return;
+		}
+	//	std::cout << "K:";
+		std::string prev_str = "    ";
+		Trunk* trunk = new Trunk(prev, prev_str);
+		printTree(root->right, trunk, true);
+		if (!prev) {
+			trunk->str = "———";
+		}
+		else if (isLeft)
+		{
+			trunk->str = ".———";
+			prev_str = "   |";
+		}
+		else {
+			trunk->str = "`———";
+			prev->str = prev_str;
+		}
+
+		showTrunks(trunk);
+		std::cout << " [" << root->character <<" : " << (int)root->freq << "]" << std::endl;
+
+		if (prev) {
+			prev->str = prev_str;
+		}
+		trunk->str = "   |";
+
+		printTree(root->left, trunk, false);
+	}
+
+
 
 };
 
@@ -319,7 +388,7 @@ uint8_t BinToChar(std::string s) {
 */
 char* HuffmanCompress(const char* str) {
 	auto freqs = GetFreqsOfChars(str);
-	PrintFrequencyOfChars(freqs);
+	//PrintFrequencyOfChars(freqs);
 	//Looks good!
 	auto m = new MaxHeap<HuffmanTreeNode *>();
 
@@ -331,24 +400,26 @@ char* HuffmanCompress(const char* str) {
 	std::cout << "\nFinal heap :\n";
 	m->PrintHeap();
 	std::cout << "\n\n\n\n\n\n\n";
-	while (m->Size()== 1) {
+	while (m->Size()!= 1) {
+
 		auto left = m->Pop();
 		auto right = m->Pop();
+	//	std::cout << "\nLeft: " << left;
+	//	std::cout << "\nRight: " << right << std::endl;
 		int sum = left->freq + right->freq;
-		m->Insert(new HuffmanTreeNode(0xff, 0, left, right));
-
-
-
-
+		m->Insert(new HuffmanTreeNode('S', sum, left, right)); //S is a special character
 	}
-	std::cout << m->Pop()->left->character;
+	
+	auto tree = m->Pop();
+	//m->Pop();
+    HuffmanTreeNode::printTree(tree);
 
 	return  const_cast<char*>(str);
 }
 
 int main() {
 	using namespace std;
-	cout << HuffmanCompress("\nHello this is good. Baby calm down calm down!");
+	cout << HuffmanCompress("Hello this is good. Baby calm down calm down!");
 	//cout << HuffmanCompress("Ebenezer Shimeles Went to the grocery to buy water!");
 	//{
 	//	auto m = new MaxHeap<int>(1);
