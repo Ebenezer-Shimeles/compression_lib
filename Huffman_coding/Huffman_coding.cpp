@@ -464,13 +464,14 @@ void Symetrify(std::string& str, char added) {
 	}
 }
 
-std::string HuffmanCompress(const char* str) {
+std::string HuffmanCompress(const char* str, HuffmanTreeNode& r) {
 	
 	auto freqs = GetFreqsOfChars(str);
 	//PrintFrequencyOfChars(freqs);
 	//Looks good!
 
 	auto tree = GetHuffmanTree(freqs);
+	r = *tree;
 	//m->Pop();
     HuffmanTreeNode::printTree(tree);
 
@@ -509,19 +510,72 @@ std::string HuffmanCompress(const char* str) {
 
 	std::string return_value = "";
 	int current_index = 0;
-	for (int i = 0; i < h.size(); i++) {
+	for (int i = 0; i < final_string.size(); i +=8) {
 		char t = 0;
 		//GetCharFromHuffmanCode(tree, final_string, current_index, t);
 		//Decompression works!!!!
+		t = BinToChar(final_string.substr(i, 8));
 		return_value += t;
 	}
 	return  return_value;
 }
+std::string StringToBinary(std::string s) {
+	std::string return_value = "";
+	for (size_t i = 0; i < s.size(); i++) {
+		std::string tmp;
+		CharToBin(s[i], tmp);
+		return_value += tmp;
+		//return_value += " ,"; //TODO:: only for debugging remove latter
+	}
+	return return_value;
+}
 
+std::string HuffmanDecompress(HuffmanTreeNode* tree, std::string compressed, uint32_t stop_len) {
+	std::cout << "Decomp got len " << stop_len << std::endl;
+	int current_index = 0;
+	std::string return_value = "";
+	for (int i = 0; i < stop_len; i++) {
+		char t = 0;
+		GetCharFromHuffmanCode(tree,compressed , current_index, t);
+		std::cout << "\nDecomp got char " << t << std::endl;
+		//Decompression works!!!!
+		return_value += t;
+	}
+	return return_value;
+}
 
 int main() {
 	using namespace std;
-	cout << HuffmanCompress("It's a beutiful night, We lookijg for somthing dumb to do who cares babdy I think I wanna marry you!aaaaaaaaaaa");
+	/*string original = "It's a beutiful night, We lookijg for somthing dumb to do who cares babdy I think I wanna marry you!aaaaaaaaaaa";
+	
+	HuffmanTreeNode root;
+	auto compressed =  HuffmanCompress(original.c_str(), root);
+	cout << compressed <<endl;
+	
+	std::string compressed_bin = StringToBinary(compressed);
+	auto decompressed = HuffmanDecompress(&root,  compressed_bin, original.size());
+	cout << "\n\nDecopressed " << decompressed;*/
+	cout << "Please Input a string to compress:: ";
+	string original;
+    getline(cin , original);
+	HuffmanTreeNode root;
+	auto compressed = HuffmanCompress(original.c_str(), root);
+	auto decompressed = HuffmanDecompress(&root, StringToBinary(compressed), original.size());
+	cout << "Original :" << original << endl;
+	cout << "Compressed: " << compressed << endl;
+	cout << "Decompressed: " << decompressed << endl;
+	double original_size = original.size();
+	double compressed_size = compressed.size();
+
+	cout << "Compression Ratio: " << compressed_size / original_size << endl;
+
+
+
+
+
+
+
+	
 	//cout << HuffmanCompress("Ebenezer Shimeles Went to the grocery to buy water!");
 	//{
 	//	auto m = new MaxHeap<int>(1);
