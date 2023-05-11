@@ -1,10 +1,10 @@
 ﻿  Huffman_coding.cpp
-C:\Users\natan\Source\Repos\Huffman_coding\Huffman_coding\Huffman_coding.cpp(537,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\natan\Source\Repos\Huffman_coding\Huffman_coding\Huffman_coding.cpp(563,90): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
-C:\Users\natan\Source\Repos\Huffman_coding\Huffman_coding\Huffman_coding.cpp(567,23): warning C4244: 'initializing': conversion from 'unsigned __int64' to 'double', possible loss of data
-C:\Users\natan\Source\Repos\Huffman_coding\Huffman_coding\Huffman_coding.cpp(568,25): warning C4244: 'initializing': conversion from 'unsigned __int64' to 'double', possible loss of data
-C:\Users\natan\Source\Repos\Huffman_coding\Huffman_coding\Huffman_coding.cpp(55,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\natan\Source\Repos\Huffman_coding\Huffman_coding\Huffman_coding.cpp(52): message : while compiling class template member function 'void MaxHeap<HuffmanTreeNode *>::PrintHeap(void)'
-C:\Users\natan\Source\Repos\Huffman_coding\Huffman_coding\Huffman_coding.cpp(421): message : see reference to function template instantiation 'void MaxHeap<HuffmanTreeNode *>::PrintHeap(void)' being compiled
-C:\Users\natan\Source\Repos\Huffman_coding\Huffman_coding\Huffman_coding.cpp(413): message : see reference to class template instantiation 'MaxHeap<HuffmanTreeNode *>' being compiled
+C:\Users\natan\Source\Repos\Huffman_coding\Huffman_coding\Huffman_coding.cpp(555,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\natan\Source\Repos\Huffman_coding\Huffman_coding\Huffman_coding.cpp(586,93): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\Users\natan\Source\Repos\Huffman_coding\Huffman_coding\Huffman_coding.cpp(590,26): warning C4244: 'initializing': conversion from 'unsigned __int64' to 'double', possible loss of data
+C:\Users\natan\Source\Repos\Huffman_coding\Huffman_coding\Huffman_coding.cpp(591,28): warning C4244: 'initializing': conversion from 'unsigned __int64' to 'double', possible loss of data
+C:\Users\natan\Source\Repos\Huffman_coding\Huffman_coding\Huffman_coding.cpp(55,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\natan\Source\Repos\Huffman_coding\Huffman_coding\Huffman_coding.cpp(52): message : while compiling class template member function 'void MinHeap<HuffmanTreeNode *>::PrintHeap(void)'
+C:\Users\natan\Source\Repos\Huffman_coding\Huffman_coding\Huffman_coding.cpp(433): message : see reference to function template instantiation 'void MinHeap<HuffmanTreeNode *>::PrintHeap(void)' being compiled
+C:\Users\natan\Source\Repos\Huffman_coding\Huffman_coding\Huffman_coding.cpp(425): message : see reference to class template instantiation 'MinHeap<HuffmanTreeNode *>' being compiled
   Huffman_coding.vcxproj -> C:\Users\natan\Source\Repos\Huffman_coding\x64\Debug\Huffman_coding.exe
